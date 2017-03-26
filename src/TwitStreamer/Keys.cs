@@ -14,7 +14,7 @@ namespace TwitStreamer
 {
     public static class Keys
     {
-        public static string API_ID = "1070c0ca";
-        public static string API_KEY = "aa509d64a927ac9d1eda5002a425d1e9";
+        public static string API_ID = "**** INSERT API ID HERE ****";
+        public static string API_KEY = "**** INSERT API KEY HERE ****";
     }
 }
