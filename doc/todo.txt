@@ -1,5 +1,0 @@
-- Refactors
-	-- Take all the Put and Get with strings and make a helper class with generics and an enum to make this more secure
-	-- Make each class consistant. I say make each class have a _show and _episode variable and then at the beginning grab this
-	-- Get the id and title and whatnot from the _show or _episode variable, keeps it cleaner
-	-- Have the ServiceInstance expose a public property of its _show and _episode instances to get the data from it
