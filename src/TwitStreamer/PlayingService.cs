@@ -12,7 +12,6 @@ using Android.Widget;
 using Android.Media;
 using Android.Net.Wifi;
 using Android.Net;
-using TwitStreamer.Repositories;
 
 namespace TwitStreamer
 {
@@ -63,8 +62,6 @@ namespace TwitStreamer
 
         public static PlayingService ServiceInstance;
 
-        //private const string Mp3 = @"http://www.podtrac.com/pts/redirect.mp3/cdn.twit.tv/audio/aaa/aaa0262/aaa0262.mp3";
-
         /// <summary>
         /// On create simply detect some of our managers
         /// </summary>
@@ -100,16 +97,10 @@ namespace TwitStreamer
             _showTitle = intent.GetStringExtra("ShowTitle");
             _episodeId = intent.GetIntExtra("EpisodeId", -1);
             _showId = intent.GetIntExtra("ShowId", -1);
-
-            //_savedPosition = GetPlayBackPosition();
+            
             _savedPosition = intent.GetIntExtra("SeekBarPosition", 0);
             Console.WriteLine("In Service: Get saved position "+_savedPosition);
-
-
-            // var preferences = GetSharedPreferences(SAVE_FILE_NAME, FileCreationMode.Private);
-            //   _savedPosition = preferences.GetInt("PlayBackPosition", 0);
-            //   if (_savedPosition < 0) _savedPosition = 0;
-
+            
             switch (intent.Action)
             {
                 case ActionPlay: Play(); break;
@@ -128,12 +119,8 @@ namespace TwitStreamer
             //Tell our player to sream music
             _player.SetAudioStreamType(Stream.Music);
 
-            //   _player.SeekTo(_savedPosition);
-
             //Wake mode will be partial to keep the CPU still running under lock screen
             _player.SetWakeMode(ApplicationContext, WakeLockFlags.Partial);
-
-            //    forwardSong();
 
             //When we have prepared the song start playback
             _player.Prepared += (sender, args) => PlayerStart();
@@ -208,10 +195,6 @@ namespace TwitStreamer
             Console.WriteLine("Start StartForeground method");
              Intent intent = new Intent(ApplicationContext, typeof(PlayBackActivity));
            
-            intent.PutExtra("ShowTitle", _showTitle);
-            intent.PutExtra("EpisodeId", _episodeId);
-            //intent.PutExtra("MediaDuration", _player.Duration);
-            //intent.PutExtra("MediaCurrentSpot", _player.CurrentPosition);
             Console.WriteLine("StarForeground method all PutExtras just happened");
             
             var pendingIntent = PendingIntent.GetActivity(ApplicationContext, 0,
@@ -242,16 +225,12 @@ namespace TwitStreamer
             }
 
             StopForeground(true);
-            //_paused = true;
-           
         }
 
         public void Stop()
         {
             if (_player == null)
-                return;
-
-           
+                return;           
 
             if (_player.IsPlaying)
             {
@@ -298,10 +277,6 @@ namespace TwitStreamer
             if (_player != null)
             {
                 SavePlayBackPosition();
-           //     var preferences = GetSharedPreferences(SAVE_FILE_NAME, FileCreationMode.Private);
-           //     var editor = preferences.Edit();
-           //    editor.PutInt("PlayBackPosition", _player.CurrentPosition);
-           //   editor.Commit();
                 _player.Release();
                 _player = null;
             }
@@ -351,33 +326,13 @@ namespace TwitStreamer
         {
             var sharedPref = GetSharedPreferences(SAVE_FILE_NAME, FileCreationMode.Private);
             var editor = sharedPref.Edit();
-            //var show = TwitRepository.Shows.FirstOrDefault(s => s.Label == _showTitle);
-           // var episode = TwitRepository.Episodes.FirstOrDefault(e => e.Id == _episodeId);
-          
-            // Test saving with just _showId and _episodeId, don't find them
+            
             string saveKey = _showId + "|" + _episodeId+"|PlayBackPosition";
             Console.WriteLine("Current Position: "+_player.CurrentPosition);
             editor.PutInt(saveKey, _player.CurrentPosition);
             editor.Commit();
         }
 
-     /*   private int GetPlayBackPosition()
-        {
-            int result = 0;
-            var show = TwitRepository.Shows.FirstOrDefault(s => s.Label == _showTitle);
-            var episode = TwitRepository.Episodes.FirstOrDefault(e => e.Id == _episodeId);
-            string saveKey = show.Id + "|" + episode.Id+"|PlayBackPosition";
-            var sharedPref = this.GetSharedPreferences(SAVE_FILE_NAME, FileCreationMode.Private);
-            int defaultValue = result;
-
-            result = sharedPref.GetInt(saveKey, defaultValue);
-
-            if (result < 0) result = 0;
-
-
-            return result;
-        }
-        */
         private void forwardSong()
         {
             if (_player != null)
