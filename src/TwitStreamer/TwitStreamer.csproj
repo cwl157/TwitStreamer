@@ -56,22 +56,17 @@
   <ItemGroup>
     <Compile Include="EpisodeDetailsActivity.cs" />
     <Compile Include="EpisodeListActivity.cs" />
-    <Compile Include="Keys.cs" />
-    <Compile Include="Models\EpisodeResponseModel.cs" />
-    <Compile Include="Models\EpisodesResponseModel.cs" />
-    <Compile Include="Models\PlayingServiceInputModel.cs" />
-    <Compile Include="Models\ShowResponseModel.cs" />
-    <Compile Include="Models\ShowsResponseModel.cs" />
-    <Compile Include="Models\VideoAudioDetailsResponseModel.cs" />
-    <Compile Include="PlayAudioBinder.cs" />
-    <Compile Include="PlayAudioServiceConnection.cs" />
+    <Compile Include="InputModels\PlayingServiceInputModel.cs" />
     <Compile Include="PlayBackActivity.cs" />
     <Compile Include="PlayingService.cs" />
-    <Compile Include="Repositories\TwitRepository.cs" />
     <Compile Include="ShowListViewAdapter.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TwitApi.cs" />
+    <Compile Include="ViewModels\EpisodeViewModel.cs" />
+    <Compile Include="ViewModels\PlayingEpisodeViewModel.cs" />
+    <Compile Include="ViewModels\ShowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GettingStarted.Xamarin" />
@@ -102,6 +97,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_stat_av_play_over_video.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TwitApi\TwitApi.csproj">
+      <Project>{19945be3-d79b-4108-b802-ba4237fe1183}</Project>
+      <Name>TwitApi</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

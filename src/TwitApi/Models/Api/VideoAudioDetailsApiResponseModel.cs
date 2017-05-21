@@ -1,18 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-
-namespace TwitStreamer.Models
+namespace TwitApi.Models.Api
 {
-    public class VideoAudioDetailsResponseModel
+    internal class VideoAudioDetailsApiResponseModel : IApiResponseModel
     {
         public string MediaUrl { get; set; }
         public string Format { get; set; }

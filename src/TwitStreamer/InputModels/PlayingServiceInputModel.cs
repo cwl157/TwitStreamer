@@ -10,12 +10,12 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace TwitStreamer.Models
+namespace TwitStreamer.InputModels
 {
-    public class ShowsResponseModel
+    public class PlayingServiceInputModel
     {
-        public int Count { get; set; }
+        public string Action { get; set; }
 
-        public List<ShowResponseModel> Shows { get; set; }
+        public int SeekBarPosition { get; set; }
     }
 }

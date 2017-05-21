@@ -9,12 +9,14 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using TwitApi.Models;
 
-namespace TwitStreamer.Models
+namespace TwitStreamer.ViewModels
 {
-    public class EpisodesResponseModel
+    public class EpisodeViewModel
     {
-        public int Count { get; set; }
-        public List<EpisodeResponseModel> Episodes { get; set; }
+        public EpisodeResponseModel Episode { get; set; }
+
+        public bool Selected { get; set; }
     }
 }
