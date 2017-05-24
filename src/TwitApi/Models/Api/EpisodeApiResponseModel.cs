@@ -14,5 +14,11 @@ namespace TwitApi.Models.Api
         public DateTime AiringDate { get; set; }
         [JsonProperty("video_audio")]
         public VideoAudioDetailsApiResponseModel AudioDetails { get; set; }
+        [JsonProperty("video_hd")]
+        public VideoAudioDetailsApiResponseModel HdVideoDetails { get; set; }
+        [JsonProperty("video_large")]
+        public VideoAudioDetailsApiResponseModel LargeVideoDetails { get; set; }
+        [JsonProperty("video_small")]
+        public VideoAudioDetailsApiResponseModel SmallVideoDetails { get; set; }
     }
 }

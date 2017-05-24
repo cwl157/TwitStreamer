@@ -55,7 +55,7 @@ namespace TwitStreamer
 
             titleTextView.Text = _episode.Episode.EpisodeNumber + " - " + _episode.Episode.Label;
             descriptionTextView.Text = _episode.Episode.Teaser;
-            episodeLengthTextView.Text = _episode.Episode.RunningTime.ToString() + " - " + _episode.Episode.AiringDate.ToLocalTime().ToString("M/d/yyyy");
+            episodeLengthTextView.Text = _episode.Episode.AudioDetails.RunningTime.ToString() + " - " + _episode.Episode.AiringDate.ToLocalTime().ToString("M/d/yyyy");
 
             // Setup button delegates
             Button play = FindViewById<Button>(Resource.Id.btnPlayEpisode);
