@@ -114,6 +114,9 @@ namespace TwitStreamer
 			// aapt resource value: 0x7f050008
 			public const int txtvwShowTitle = 2131034120;
 			
+			// aapt resource value: 0x7f050011
+			public const int videoViewer = 2131034129;
+			
 			static Id()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -138,6 +141,9 @@ namespace TwitStreamer
 			
 			// aapt resource value: 0x7f030003
 			public const int PlayBack = 2130903043;
+			
+			// aapt resource value: 0x7f030004
+			public const int VideoPlayBack = 2130903044;
 			
 			static Layout()
 			{
