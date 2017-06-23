@@ -12,7 +12,7 @@ using TwitStreamer.ViewModels;
 
 namespace TwitStreamer
 {
-    [Activity(Label = "EpisodeListActivity")]
+    [Activity(Label = "TwitStreamer - Episode List")]
     public class EpisodeListActivity : ListActivity
     {
         List<string> _titles;
@@ -42,7 +42,7 @@ namespace TwitStreamer
                 StartActivity(intent);
                 return;
             }
-
+            Window.SetTitle(_show.Show.Label + " - Episodes");
             _titles.Clear();
 
             if (_show.Episodes.Count > 0)

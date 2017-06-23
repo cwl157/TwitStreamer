@@ -11,7 +11,7 @@ using TwitStreamer.ViewModels;
 
 namespace TwitStreamer
 {
-    [Activity(Label = "TwitStreamer", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "TwitStreamer - Show List", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : ListActivity
     {
         private List<string> _titles;

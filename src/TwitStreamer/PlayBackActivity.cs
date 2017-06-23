@@ -22,7 +22,7 @@ namespace TwitStreamer
      * Create widget that runs in the notification bar with playback controls on it
      */
 
-    [Activity(Label = "PlayBackActivity", LaunchMode = Android.Content.PM.LaunchMode.SingleTask)]
+    [Activity(Label = "TwitStreamer - Playback", LaunchMode = Android.Content.PM.LaunchMode.SingleTask)]
     public class PlayBackActivity : Activity
     {
         private const string SAVE_FILE_NAME = "PlayBackData";
@@ -87,6 +87,7 @@ namespace TwitStreamer
                 return;
             }
 
+            Window.SetTitle(_show.Show.Label + " - " + _episode.Episode.Label);
             TextView episodeHeading = FindViewById<TextView>(Resource.Id.txtVwEpisodeTitle);
             episodeHeading.Text = _episode.Episode.EpisodeNumber + " - " + _episode.Episode.Label;
 

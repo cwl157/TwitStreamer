@@ -13,7 +13,7 @@ using TwitStreamer.ViewModels;
 
 namespace TwitStreamer
 {
-    [Activity(Label = "EpisodeDetailsActivity")]
+    [Activity(Label = "TwitStreamer - Episode Details")]
     public class EpisodeDetailsActivity : Activity
     {
         private ShowViewModel _show;
@@ -49,6 +49,7 @@ namespace TwitStreamer
             }
 
             // Setup UI elements
+            Window.SetTitle(_show.Show.Label + " - " + _episode.Episode.Label);
             TextView titleTextView = FindViewById<TextView>(Resource.Id.txtvwEpisodeTitle);
             TextView descriptionTextView = FindViewById<TextView>(Resource.Id.txtvwEpisodeDescription);
             TextView episodeLengthTextView = FindViewById<TextView>(Resource.Id.txtvwEpisodeLength);
