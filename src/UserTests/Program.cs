@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TwitApi;
 using TwitApi.Methods;
 using TwitApi.Models;
 
@@ -12,7 +13,7 @@ namespace UserTests
     {
         static void Main(string[] args)
         {
-            TwitStreamer_TestShows();
+            TestEpisodes();
 
             Console.Read();
         }
@@ -33,18 +34,38 @@ namespace UserTests
         //    }
         //}
 
-        private static void TwitStreamer_TestShows()
+        private static void TestEpisodes()
         {
-            Task t = new Task(() => { TwitApi.Instance.RefreshShows(); });
-            t.Start();
-            t.Wait();
+            TwitApiService t = new TwitApiService();
 
-            foreach (TwitStreamer.ViewModels.ShowViewModel s in TwitStreamer.TwitApi.Instance.Shows)
-            {
-                Console.WriteLine(s.Show.Id);
-                Console.WriteLine(s.Show.Label);
-                Console.WriteLine(s.Show.Description);
-            }
+            Task<EpisodesResponseModel> e = new Task<EpisodesResponseModel>(() => { return t.CallApi<EpisodesResponseModel>(new GetEpisodes(new GetEpisodesRequestModel { ShowId = 1642})).Result; });
+            e.Start();
+            e.ContinueWith((episodes) => {
+                foreach (EpisodeResponseModel es in episodes.Result.Episodes)
+                {
+                    Console.WriteLine(es.Label);
+                    foreach (VideoAudioDetailsResponseModel va in es.MediaTypes)
+                    {
+                        Console.WriteLine(va.Type);
+                        Console.WriteLine(va.MediaUrl);
+                        
+                    }
+                }
+            });
         }
+
+        //private static void TwitStreamer_TestShows()
+        //{
+        //    Task t = new Task(() => { TwitApi.Instance.RefreshShows(); });
+        //    t.Start();
+        //    t.Wait();
+
+        //    foreach (TwitStreamer.ViewModels.ShowViewModel s in TwitStreamer.TwitApi.Instance.Shows)
+        //    {
+        //        Console.WriteLine(s.Show.Id);
+        //        Console.WriteLine(s.Show.Label);
+        //        Console.WriteLine(s.Show.Description);
+        //    }
+        //}
     }
 }

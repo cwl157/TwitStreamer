@@ -100,11 +100,11 @@ namespace TwitStreamer
             _playBackDurationText.Text = "0";
             _playBackProgressText.Text = "0";
 
-            _mediaLength = new TimeSpan(_episode.Episode.Hours, _episode.Episode.Minutes, _episode.Episode.Seconds);
+            _mediaLength = new TimeSpan(_episode.Episode.AudioDetails.Hours, _episode.Episode.AudioDetails.Minutes, _episode.Episode.AudioDetails.Seconds);
 
-            _mediaUri = _episode.Episode.MediaUrl;
+            _mediaUri = _episode.Episode.AudioDetails.MediaUrl;
 
-            TimeSpan t = new TimeSpan(_episode.Episode.Hours, _episode.Episode.Minutes, _episode.Episode.Seconds);
+            TimeSpan t = new TimeSpan(_episode.Episode.AudioDetails.Hours, _episode.Episode.AudioDetails.Minutes, _episode.Episode.AudioDetails.Seconds);
             _seekBar.Max = int.Parse(t.TotalMilliseconds.ToString());
             _playBackDurationText.Text = GetTimeString(_seekBar.Max);
 

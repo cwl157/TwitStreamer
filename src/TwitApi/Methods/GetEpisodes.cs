@@ -25,7 +25,7 @@ namespace TwitApi.Methods
                 client.DefaultRequestHeaders.Add("app-id", Keys.API_ID);
                 client.DefaultRequestHeaders.Add("app-key", Keys.API_KEY);
 
-                string endpoint = "/api/v1.0/episodes?filter[shows]={0}&fields=id,label,episodeNumber,teaser,airingDate,video_audio";
+                string endpoint = "/api/v1.0/episodes?filter[shows]={0}&fields=id,label,episodeNumber,teaser,airingDate,video_audio,video_hd,video_large,video_small";
                 endpoint = string.Format(endpoint, _requestModel.ShowId);
                 HttpResponseMessage response = await client.GetAsync(endpoint);
                 if (response.IsSuccessStatusCode)

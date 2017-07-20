@@ -16,7 +16,7 @@
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -56,7 +56,6 @@
   <ItemGroup>
     <Compile Include="EpisodeDetailsActivity.cs" />
     <Compile Include="EpisodeListActivity.cs" />
-    <Compile Include="Infrastructure\AdvancedVideoView.cs" />
     <Compile Include="InputModels\PlayingServiceInputModel.cs" />
     <Compile Include="PlayBackActivity.cs" />
     <Compile Include="PlayingService.cs" />
@@ -67,6 +66,7 @@
     <Compile Include="TwitApi.cs" />
     <Compile Include="VideoViewerActivity.cs" />
     <Compile Include="ViewModels\EpisodeViewModel.cs" />
+    <Compile Include="ViewModels\PlayingEpisodeViewModel.cs" />
     <Compile Include="ViewModels\ShowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

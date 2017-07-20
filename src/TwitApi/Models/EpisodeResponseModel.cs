@@ -13,14 +13,9 @@ namespace TwitApi.Models
         public string Teaser { get; set; }
         public DateTime AiringDate { get; set; }
 
-        public string MediaUrl { get; set; }
-        public string Format { get; set; }
-        public string Guid { get; set; }
-        public string Size { get; set; }
-        public string Changed { get; set; }
-        public TimeSpan RunningTime { get; set; }
-        public int Hours { get; set; }
-        public int Minutes { get; set; }
-        public int Seconds { get; set; }
+        public VideoAudioDetailsResponseModel AudioDetails { get; set; }
+        public VideoAudioDetailsResponseModel HdVideoDetails { get; set; }
+        public VideoAudioDetailsResponseModel LargeVideoDetails { get; set; }
+        public VideoAudioDetailsResponseModel SmallVideoDetails { get; set; }
     }
 }
