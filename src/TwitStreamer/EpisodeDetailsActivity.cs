@@ -18,6 +18,7 @@ namespace TwitStreamer
     {
         private ShowViewModel _show;
         private EpisodeViewModel _episode;
+        private RadioGroup _mediaTypeList;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -57,6 +58,25 @@ namespace TwitStreamer
             descriptionTextView.Text = _episode.Episode.Teaser;
             episodeLengthTextView.Text = _episode.Episode.AudioDetails.RunningTime.ToString() + " - " + _episode.Episode.AiringDate.ToLocalTime().ToString("M/d/yyyy");
 
+            _mediaTypeList = FindViewById<RadioGroup>(Resource.Id.mediaTypeList);
+            _mediaTypeList.RemoveAllViews();
+            RadioButton audioButton = new RadioButton(this.ApplicationContext);
+            RadioButton smallVideoButton = new RadioButton(this.ApplicationContext);
+            RadioButton largeVideoButton = new RadioButton(this.ApplicationContext);
+            RadioButton hdVideoButton = new RadioButton(this.ApplicationContext);
+            audioButton.Text = "Audio";
+            audioButton.SetPadding(5, 5, 0, 20);
+            smallVideoButton.Text = "Small Video";
+            smallVideoButton.SetPadding(5, 5, 0, 20);
+            largeVideoButton.Text = "Large Video";
+            largeVideoButton.SetPadding(5, 5, 0, 20);
+            hdVideoButton.Text = "HD Video";
+            hdVideoButton.SetPadding(5, 5, 0, 20);
+            _mediaTypeList.AddView(audioButton);
+            _mediaTypeList.AddView(smallVideoButton);
+            _mediaTypeList.AddView(largeVideoButton);
+            _mediaTypeList.AddView(hdVideoButton);
+
             // Setup button delegates
             Button play = FindViewById<Button>(Resource.Id.btnPlayEpisode);
             play.Click += delegate
@@ -85,7 +105,33 @@ namespace TwitStreamer
 
                 }
                 // Start playing episode
-                Intent i = new Intent(this.ApplicationContext, typeof(PlayBackActivity));
+                int radioButtonID = _mediaTypeList.CheckedRadioButtonId;
+                View radioButton = _mediaTypeList.FindViewById(radioButtonID);
+                string videoUrl = "";
+                int idx = _mediaTypeList.IndexOfChild(radioButton); 
+                Type activityToStart = typeof(PlayBackActivity);
+
+                if (idx > 0)
+                {
+                    activityToStart = typeof(VideoViewerActivity);
+                    if (idx == 1)
+                    {
+                        videoUrl = _episode.Episode.SmallVideoDetails.MediaUrl;
+                    }
+                    else if (idx == 2)
+                    {
+                        videoUrl = _episode.Episode.LargeVideoDetails.MediaUrl;
+                    }
+                    else if (idx == 3)
+                    {
+                        videoUrl = _episode.Episode.HdVideoDetails.MediaUrl;
+                    }
+                }
+                Intent i = new Intent(this.ApplicationContext, activityToStart);
+                if (videoUrl != "")
+                {
+                    i.PutExtra("VideoUrl", videoUrl);
+                }
                 StartActivity(i);
             };
         }

@@ -10,18 +10,24 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using TwitStreamer.ViewModels;
+using TwitStreamer.Infrastructure;
 
 namespace TwitStreamer
 {
-    [Activity(Label = "VideoViewerActivity")]
+    [Activity(Label = "VideoViewerActivity", ScreenOrientation =Android.Content.PM.ScreenOrientation.Landscape)]
     public class VideoViewerActivity : Activity
     {
+        private const string SAVE_FILE_NAME = "PlayBackData";
+
         private ShowViewModel _show;
         private EpisodeViewModel _episode;
+        private MediaController _mediaController;
+        private AdvancedVideoView _videoPlayer;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            RequestWindowFeature(WindowFeatures.NoTitle);
             SetContentView(Resource.Layout.VideoPlayBack);
 
             _show = TwitApi.Instance.Shows.FirstOrDefault(s => s.Selected == true);
@@ -37,12 +43,71 @@ namespace TwitStreamer
             }
 
             
-            var videoView = FindViewById<VideoView>(Resource.Id.videoViewer);
-            videoView.SetVideoURI(new Android.Net.Uri(_episode.Episode.HdVideoDetails.MediaUrl));
-            videoView.Start();
-            videoView.Duration = 
+            _videoPlayer = FindViewById<AdvancedVideoView>(Resource.Id.videoViewer);
+            _mediaController = new MediaController(this, true);
+           
+            _videoPlayer.SetMediaController(_mediaController);
+            string mediaUrl = Intent.GetStringExtra("VideoUrl");
+
+            _videoPlayer.SetVideoPath(mediaUrl);
 
             // Create your application here
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+            _videoPlayer.Prepared += OnVideoPlayerPrepared;
+        }
+
+        protected override void OnStop()
+        {
+            _videoPlayer.Prepared -= OnVideoPlayerPrepared;
+            _mediaController.Dispose();
+            _videoPlayer.Dispose();
+            base.OnStop();
+        }
+
+        protected override void OnDestroy()
+        {
+            _mediaController.Dispose();
+            _videoPlayer.Dispose();
+            base.OnDestroy();
+        }
+
+        private void OnVideoPlayerPrepared(object sender, EventArgs e)
+        {
+            _mediaController.SetAnchorView(_videoPlayer);
+            //show media controls for 3 seconds when video starts to play
+            _mediaController.Show(3000);
+            int loadedPosition = GetPlayBackPosition();
+            if (loadedPosition > 0)
+            {
+                _videoPlayer.SeekTo(loadedPosition);
+            }
+            _videoPlayer.Start();
+        }
+
+        private int GetPlayBackPosition()
+        {
+            int result = 0;
+            ShowViewModel show = TwitApi.Instance.Shows.FirstOrDefault(s => s.Selected == true);
+            if (show != null)
+            {
+                EpisodeViewModel episode = show.Episodes.FirstOrDefault(e => e.Selected == true);
+                if (episode != null)
+                {
+                    // If we find a show and episode, get the playback position. If not it will just start from the beginning.
+                    string saveKey = show.Show.Id + "|" + episode.Episode.Id + "|PlayBackPosition";
+                    var sharedPref = this.GetSharedPreferences(SAVE_FILE_NAME, FileCreationMode.Private);
+                    int defaultValue = result;
+
+                    result = sharedPref.GetInt(saveKey, defaultValue);
+
+                    if (result < 0) result = 0;
+                }
+            }
+            return result;
         }
     }
 }
