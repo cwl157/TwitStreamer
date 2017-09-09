@@ -109,7 +109,7 @@ namespace TwitStreamer
                 int radioButtonID = _mediaTypeList.CheckedRadioButtonId;
                 View radioButton = _mediaTypeList.FindViewById(radioButtonID);
                 string videoUrl = "";
-                int idx = _mediaTypeList.IndexOfChild(radioButton); 
+                int idx = _mediaTypeList.IndexOfChild(radioButton);
                 Type activityToStart = typeof(PlayBackActivity);
 
                 if (idx > 0)
@@ -134,6 +134,12 @@ namespace TwitStreamer
                     i.PutExtra("VideoUrl", videoUrl);
                 }
                 StartActivity(i);
+            }; // end play delegate
+
+            Button download = FindViewById<Button>(Resource.Id.btnDownloadEpisode);
+            download.Click += delegate
+            {
+                Android.Widget.Toast.MakeText(this, "Start Download", Android.Widget.ToastLength.Short).Show();
             };
         }
 
