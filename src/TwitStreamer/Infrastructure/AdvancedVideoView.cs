@@ -53,6 +53,13 @@ namespace TwitStreamer.Infrastructure
 
         }
 
+        public override void StopPlayback()
+        {
+            SavePlayBackPosition();
+            base.StopPlayback();
+            //Android.Widget.Toast.MakeText(this.Context, "Stop playback", Android.Widget.ToastLength.Short).Show();
+        }
+
         private void SavePlayBackPosition()
         {
             ShowViewModel show = TwitApi.Instance.Shows.FirstOrDefault(s => s.Selected == true);

@@ -54,24 +54,21 @@ namespace TwitStreamer
             // Create your application here
         }
 
-        protected override void OnRestart()
-        {
-            base.OnRestart();
-        }
-
         protected override void OnStart()
         {
             base.OnStart();
             _videoPlayer.Prepared += OnVideoPlayerPrepared;
         }
 
-        protected override void OnStop()
-        {
-                 _videoPlayer.Prepared -= OnVideoPlayerPrepared;
-            //    _mediaController.Dispose();
-            //    _videoPlayer.Dispose();
-            // TODO: Possibly save position here
+        protected override void OnPause()
+        {            
+            base.OnPause();
             _videoPlayer.StopPlayback();
+        }
+
+        protected override void OnStop()
+        {   
+            _videoPlayer.Prepared -= OnVideoPlayerPrepared;
             base.OnStop();
         }
 
@@ -85,8 +82,6 @@ namespace TwitStreamer
         public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)
         {
             base.OnConfigurationChanged(newConfig);
-            //ScreenOrientation = Android.Content.PM.ScreenOrientation.Landscape;
-            //newConfig.Orientation = Android.Content.Res.Orientation.Landscape;
             // Do something to _videoPlayer so prepared gets called
             // Super hacky. The only time OnCofigurationChanged is called is when coming and going from the lock screen
             // so when going to the lock screen back out to the EpisodeDetailsActivity.
