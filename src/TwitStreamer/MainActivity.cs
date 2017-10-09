@@ -15,10 +15,12 @@ namespace TwitStreamer
     public class MainActivity : ListActivity
     {
         private List<string> _titles;
+        private ProgressDialog _progress;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+            _progress = new ProgressDialog(this);
             _titles = new List<string>();
             _titles.Add("Refresh");
             ListAdapter = new ShowListViewAdatper(this, _titles.ToArray());
@@ -49,7 +51,14 @@ namespace TwitStreamer
 
         private async void GetShows()
         {
+            _progress.SetMessage("Downloading show list...");
+            _progress.SetCancelable(false);
+            _progress.Show();
+            
+
             await TwitApi.Instance.RefreshShows();
+
+            _progress.Hide();
 
             if (TwitApi.Instance.Shows.Count > 0)
             {

@@ -17,12 +17,13 @@ namespace TwitStreamer
     {
         List<string> _titles;
         private ShowViewModel _show;
-
+        private ProgressDialog _progress;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
+            _progress = new ProgressDialog(this);
             _titles = new List<string>();
             _titles.Add("Refresh");
             ListAdapter = new ShowListViewAdatper(this, _titles.ToArray());
@@ -80,7 +81,13 @@ namespace TwitStreamer
 
         private async void GetEpisodes()
         {
+            _progress.SetMessage("Downloading episode list...");
+            _progress.SetCancelable(false);
+            _progress.Show();
+
             await TwitApi.Instance.RefreshEpisodes(_show.Show.Id);
+
+            _progress.Hide();
 
            if (_show.Episodes.Count > 0)
             {
